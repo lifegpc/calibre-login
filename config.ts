@@ -30,6 +30,9 @@ export class Config {
     get port() {
         return this._return_number("port");
     }
+    get logout() {
+        return this._return_string("logout") || "Log out";
+    }
 }
 
 export async function load_settings(path: string) {

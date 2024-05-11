@@ -5,7 +5,10 @@ import { get_host } from "../server/utils.ts";
 
 export async function handler(req: Request, ctx: MiddlewareHandlerContext) {
     const u = new URL(req.url);
-    if (u.pathname.startsWith("/_frsh/") || u.pathname === "/login") {
+    if (
+        u.pathname.startsWith("/_frsh/") || u.pathname === "/login" ||
+        u.pathname == "/logout"
+    ) {
         return await ctx.next();
     }
     if (!settings.calibre) {
@@ -34,6 +37,22 @@ export async function handler(req: Request, ctx: MiddlewareHandlerContext) {
     if (re.status === 101) return re;
     if (re.status === 401) {
         return Response.redirect(`${get_host(req)}/login`, 302);
+    }
+    if (u.pathname == "/") {
+        let inject_js = import.meta.resolve("../static/inject.js").slice(7);
+        if (Deno.build.os === "windows") {
+            inject_js = inject_js.slice(1);
+        }
+        const inject_html = await Deno.readTextFile(inject_js);
+        const html = await re.text();
+        const inject = `<script>
+var logout_text="${settings.logout}";
+${inject_html}</script>`;
+        return new Response(html.replace("</head>", inject + "</head>"), {
+            headers: re.headers,
+            status: re.status,
+            statusText: re.statusText,
+        });
     }
     return re;
 }

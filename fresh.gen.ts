@@ -4,12 +4,14 @@
 
 import * as $0 from "./routes/_middleware.ts";
 import * as $1 from "./routes/login.tsx";
+import * as $2 from "./routes/logout.ts";
 import * as $$0 from "./islands/Login.tsx";
 
 const manifest = {
     routes: {
         "./routes/_middleware.ts": $0,
         "./routes/login.tsx": $1,
+        "./routes/logout.ts": $2,
     },
     islands: {
         "./islands/Login.tsx": $$0,
