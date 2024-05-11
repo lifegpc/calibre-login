@@ -36,7 +36,8 @@ export async function handler(req: Request, ctx: MiddlewareHandlerContext) {
     });
     if (re.status === 101) return re;
     if (re.status === 401) {
-        return Response.redirect(`${get_host(req)}/login`, 302);
+        const from = encodeURIComponent(`${u.pathname}${u.search}`);
+        return Response.redirect(`${get_host(req)}/login?from=${from}`, 302);
     }
     if (u.pathname == "/") {
         let inject_js = import.meta.resolve("../static/inject.js").slice(7);

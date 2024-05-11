@@ -50,7 +50,8 @@ export default class Login extends Component {
                         if (!username || !password) return;
                         login(username, password).then(() => {
                             set_disabled(false);
-                            document.location.href = "/";
+                            const from = new URL(document.location.href).searchParams.get("from") || "/";
+                            document.location.href = from;
                         }).catch((e) => {
                             console.error(e);
                             set_disabled(false);
