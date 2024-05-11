@@ -36,6 +36,21 @@ export async function handler(req: Request, ctx: MiddlewareHandlerContext) {
     });
     if (re.status === 101) return re;
     if (re.status === 401) {
+        const ua = req.headers.get("User-Agent") || "";
+        if (ua.match(/^mozilla\/\d+/i)) {
+            let redirect_html = import.meta.resolve("../static/redirect.html").slice(7);
+            if (Deno.build.os === "windows") {
+                redirect_html = redirect_html.slice(1);
+            }
+            const rhtml = await Deno.readTextFile(redirect_html);
+            return new Response(rhtml, {
+                headers: {
+                    "Content-Type": "text/html",
+                },
+                status: 401,
+                statusText: "Unauthorized",
+            });
+        }
         const from = encodeURIComponent(`${u.pathname}${u.search}`);
         return Response.redirect(`${get_host(req)}/login?from=${from}`, 302);
     }

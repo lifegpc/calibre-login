@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirect Page</title>
+    <script>
+        const u = new URL(document.location.href);
+        const from = encodeURIComponent(`${u.pathname}${u.search}${u.hash}`)
+        window.location.href = "/login?from=" + from;
+    </script>
+</head>
+<body>
+    <h1>Redirecting...</h1>
+</body>
+</html>
