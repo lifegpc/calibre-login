@@ -1,7 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
 
 export const handler: Handlers = {
-    GET(_req, _ctx) {
+    POST(_req, _ctx) {
         const headers = {
             "Set-Cookie": "token=; Max-Age=0",
             "Location": "/login",
