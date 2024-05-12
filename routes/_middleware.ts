@@ -38,7 +38,8 @@ export async function handler(req: Request, ctx: MiddlewareHandlerContext) {
     if (re.status === 401) {
         const ua = req.headers.get("User-Agent") || "";
         if (ua.match(/^mozilla\/\d+/i)) {
-            let redirect_html = import.meta.resolve("../static/redirect.html").slice(7);
+            let redirect_html = import.meta.resolve("../static/redirect.html")
+                .slice(7);
             if (Deno.build.os === "windows") {
                 redirect_html = redirect_html.slice(1);
             }

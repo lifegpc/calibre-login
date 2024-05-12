@@ -4,7 +4,11 @@ import { load_dmodule } from "../server/dmodule.ts";
 import BTextField from "../components/BTextField.tsx";
 import { MdTonalButton } from "../server/dmodule.ts";
 
-export default class Login extends Component {
+type Props = {
+    i18n?: Record<string, string | undefined>;
+};
+
+export default class Login extends Component<Props> {
     render() {
         const [username, set_username] = useState<string>();
         const [password, set_password] = useState<string>();
@@ -34,13 +38,13 @@ export default class Login extends Component {
             <div>
                 <BTextField
                     type="text"
-                    label="Username"
+                    label={this.props.i18n?.username || "Username"}
                     value={username}
                     set_value={set_username}
                 />
                 <BTextField
                     type="password"
-                    label="Password"
+                    label={this.props.i18n?.password || "Password"}
                     value={password}
                     set_value={set_password}
                 />
@@ -50,7 +54,9 @@ export default class Login extends Component {
                         if (!username || !password) return;
                         login(username, password).then(() => {
                             set_disabled(false);
-                            const from = new URL(document.location.href).searchParams.get("from") || "/";
+                            const from =
+                                new URL(document.location.href).searchParams
+                                    .get("from") || "/";
                             document.location.href = from;
                         }).catch((e) => {
                             console.error(e);
@@ -58,7 +64,7 @@ export default class Login extends Component {
                         });
                     }}
                 >
-                    Login
+                    {this.props.i18n?.login || "Log in"}
                 </Button>
             </div>
         );

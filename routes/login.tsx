@@ -3,6 +3,7 @@ import { Handlers } from "$fresh/server.ts";
 import Login from "../islands/Login.tsx";
 import { get_string, parse_bool } from "../server/parse_form.ts";
 import { encode } from "std/encoding/base64.ts";
+import { settings } from "../main.ts";
 
 export const handler: Handlers = {
     GET(_req, ctx) {
@@ -26,6 +27,11 @@ export const handler: Handlers = {
 };
 
 export default function Home() {
+    const i18n = {
+        username: settings.username,
+        password: settings.password,
+        login: settings.login,
+    };
     return (
         <>
             <Head>
@@ -35,8 +41,19 @@ export default function Home() {
                     margin-top: 4px;
                     {"}"}
                 </style>
+                <link
+                    rel="icon"
+                    sizes="256x256"
+                    type="image/png"
+                    href="favicon.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="256x256"
+                    href="apple-touch-icon.png"
+                />
             </Head>
-            <Login />
+            <Login i18n={i18n} />
         </>
     );
 }

@@ -33,6 +33,15 @@ export class Config {
     get logout() {
         return this._return_string("logout") || "Log out";
     }
+    get username() {
+        return this._return_string("username");
+    }
+    get password() {
+        return this._return_string("password");
+    }
+    get login() {
+        return this._return_string("login");
+    }
 }
 
 export async function load_settings(path: string) {
