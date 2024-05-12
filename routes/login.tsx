@@ -38,7 +38,7 @@ export default function Home() {
                 <title>calibre-login</title>
                 <style>
                     .b-text-field.label {"{"}
-                    margin-top: 4px;
+                    margin-top: 8px;
                     {"}"}
                 </style>
                 <link
