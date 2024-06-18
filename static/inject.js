@@ -26,7 +26,7 @@ const ob = new MutationObserver((records) => {
                 const span = document.createElement("span");
                 span.innerText = logout_text;
                 a.appendChild(span);
-                box.innerHTML += "&nbsp;";
+                box.appendChild(document.createTextNode("\u00A0"));
                 box.appendChild(a);
             }
         }
